@@ -1,0 +1,19 @@
+{
+  "name": "mandel",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Levente Löki <leventeloki@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build-typescript": "tsc -p ./src --outDir compile",
+    "build-webpack": "webpack",
+    "build": "yarn run build-typescript && yarn run build-webpack",
+    "watch": "tsc -p ./src --outDir compile --watch & webpack --progress --colors --watch"   
+  },
+  "devDependencies": {
+    "@types/core-js": "^0.9.42",
+    "typescript": "^2.4.2",
+    "webpack": "^3.5.5",
+    "webpack-livereload-plugin": "^0.11.0"
+  }
+}

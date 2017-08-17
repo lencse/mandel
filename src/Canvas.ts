@@ -1,13 +1,14 @@
 export default class Canvas {
 
-    private canvas;
+    private canvas: HTMLCanvasElement;
+    private context: CanvasRenderingContext2D;
 
     constructor(container: HTMLElement) {
         this.canvas = document.createElement('canvas');
-        this.canvas.setAttribute('width', container.clientWidth);
-        this.canvas.setAttribute('height', container.clientHeight);
-        this.canvas.setAttribute('id', 'canvas');
+        this.canvas.setAttribute('width', container.clientWidth.toString());
+        this.canvas.setAttribute('height', container.clientHeight.toString());
         container.appendChild(this.canvas);
+        this.context = this.canvas.getContext('2d');
     }
 
     public get width(): number {
@@ -18,22 +19,13 @@ export default class Canvas {
         return this.canvas.clientHeight;
     }
 
-    public get context(): CanvasRenderingContext2D {
-        return this.canvas.getContext('2d');
+    public clear() {
+        this.context.clearRect(0, 0, this.width, this.height);
     }
 
-    public draw() {
-        let context = this.context;
-        this.context.clearRect(0, 0, this.width, this.height);
-        this.context.strokeStyle = '#df4b26';
-        this.context.lineJoin = 'round';
-        this.context.lineWidth = 4;
-                  
-        this.context.beginPath(); 
-        this.context.moveTo(0, 0);
-        this.context.lineTo(this.width, this.height);
-        this.context.closePath();
-        this.context.stroke();       
+    public fillRect(color: string, x: number, y: number, width: number, height: number) {
+        this.context.fillStyle = color;
+        this.context.fillRect(x, y, width, height);
     }
 
 }

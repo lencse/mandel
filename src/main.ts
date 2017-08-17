@@ -1,5 +1,9 @@
 import Canvas from './Canvas';
-import Fractal from './Fractal';
+import App from './App';
 
-let fractal = new Fractal(new Canvas(document.getElementById('main')));
-fractal.draw();
+let app = new App(
+    new Canvas(document.getElementById('main')),
+    new Canvas(document.getElementById('controller'))
+);
+
+app.run();

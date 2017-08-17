@@ -1,4 +1,4 @@
-import { maxIterations } from './consts';
+import { maxIterations } from './lib';
 
 let colors: Array<string> = [];
 

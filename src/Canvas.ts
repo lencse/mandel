@@ -1,7 +1,7 @@
 export default class Canvas {
 
-    private canvas: HTMLCanvasElement;
-    private context: CanvasRenderingContext2D;
+    protected canvas: HTMLCanvasElement;
+    protected context: CanvasRenderingContext2D;
 
     constructor(container: HTMLElement) {
         this.canvas = document.createElement('canvas');
@@ -26,6 +26,18 @@ export default class Canvas {
     public fillRect(color: string, x: number, y: number, width: number, height: number) {
         this.context.fillStyle = color;
         this.context.fillRect(x, y, width, height);
+    }
+
+    public onMouseDown(listener: EventListener) {
+        this.canvas.addEventListener('mousedown', listener);
+    }
+
+    public onMouseMove(listener: EventListener) {
+        this.canvas.addEventListener('mousemove', listener);
+    }
+
+    public onMouseUp(listener: EventListener) {
+        this.canvas.addEventListener('mouseup', listener);
     }
 
 }

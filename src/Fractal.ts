@@ -1,8 +1,15 @@
 import Canvas from './Canvas';
-import { maxIterations } from './consts';
+import { maxIterations, Complex, Point } from './lib';
 import colors from './colors';
 
 export default class Fractal {
+
+    private center: Complex = {
+        re: -0.4,
+        im: 0.0
+    };
+
+    private width: number = 4.0;
 
     private canvas: Canvas;
 
@@ -10,26 +17,39 @@ export default class Fractal {
         this.canvas = canvas;
     }
 
-    public draw() {
-        const center = {x: -0.4, y: 0.0};
-        const sWidth = 4.0;
+    public resize(center: Point, width: number) {
+        console.log(center, width);
+        const newCenter: Complex = {
+            re: this.center.re + (center.x - this.canvas.width/2) * this.width / this.canvas.width,
+            im: this.center.im + (center.y - this.canvas.height/2) * this.width /this.canvas.width
+        };
+        const newWidth = this.width * width / this.canvas.width;
+        this.setState(newCenter, newWidth);
+    }
 
+    public setState(center: Complex, width: number) {
+        this.center = center;
+        this.width = width;
+        this.draw();
+    }
+
+    public draw() {
         this.canvas.clear();
         const width = this.canvas.width;
         const height = this.canvas.height;
         for (let col = 0; col < width; ++col) {
             for (let row = 0; row < height; ++row) {
-                let cRe = center.x + (col - width/2) * sWidth / width;
-                let cIm = center.y + (row - height/2) * sWidth / width;
-                // let cRe = center.x + (col - width/sWidth * 2) * sWidth / width;
-                // let cIm = center.y + (row - height/sWidth * 2) * sWidth / width;
-                let x = 0.0;
-                let y = 0.0;
+                const c: Complex = {
+                    re: this.center.re + (col - width/2) * this.width / width,
+                    im: this.center.im + (row - height/2) * this.width / width
+                };
+                let z: Complex = c;
                 let iteration = 0;
-                while (iteration < maxIterations && x*x + y*y <= 4.0) {
-                    let xNew = x*x - y*y + cRe;
-                    y = 2*x*y + cIm;
-                    x = xNew;
+                while (iteration < maxIterations && z.re*z.re + z.im*z.im <= 4.0) {
+                    z = {
+                        re: z.re*z.re - z.im*z.im + c.re,
+                        im: 2*z.re*z.im + c.im
+                    };
                     ++iteration;
                 }
 

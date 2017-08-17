@@ -1,4 +1,6 @@
 import Canvas from './Canvas';
+import { maxIterations } from './consts';
+import colors from './colors';
 
 export default class Fractal {
 
@@ -10,7 +12,6 @@ export default class Fractal {
 
     public draw() {
         this.canvas.clear();
-        const max = 1024;
         const width = this.canvas.width;
         const height = this.canvas.height;
         for (let col = 0; col < width; ++col) {
@@ -20,14 +21,14 @@ export default class Fractal {
                 let x = 0.0;
                 let y = 0.0;
                 let iteration = 0;
-                while (iteration < max && x*x + y*y <= 4.0) {
+                while (iteration < maxIterations && x*x + y*y <= 4.0) {
                     let xNew = x*x - y*y + cRe;
                     y = 2*x*y + cIm;
                     x = xNew;
                     ++iteration;
                 }
 
-                this.canvas.fillRect(iteration < max ? '#0cc' : '#000', col, row, 1, 1);
+                this.canvas.fillRect(iteration < maxIterations ? colors[iteration] : 'rgb(0, 0, 0)', col, row, 1, 1);
             }            
         }
     }

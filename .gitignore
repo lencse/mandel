@@ -1,3 +1,9 @@
+.DS_Store
+
 node_modules
-/build
 /compile
+/build/*
+!/build/.gitkeep
+/dist
+/dist.watch
+/webpack.config.js

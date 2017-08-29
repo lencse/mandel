@@ -5,13 +5,23 @@
   "author": "Levente Löki <leventeloki@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "clean": "rm -rf compile dist dist.watch",
     "build-typescript": "tsc -p ./src --outDir compile",
     "build-webpack": "webpack",
-    "build": "yarn run build-typescript && yarn run build-webpack",
-    "watch": "tsc -p ./src --outDir compile --watch & webpack --progress --colors --watch"   
+    "build": "yarn run clean && yarn run build-typescript && yarn run build-webpack",
+    "watch": "yarn run clean && yarn run build-typescript && (tsc -p ./src --outDir compile --watch & webpack --progress --colors --watch)",
+    "install-webpack-config": "ln -fs build/js/bin/webpack.config.js webpack.config.js",
+    "install-build-dir": "ln -fs ../compile build/js",
+    "postinstall": "yarn run install-webpack-config && yarn run install-build-dir"
   },
   "devDependencies": {
+    "@types/command-line-args": "^4.0.1",
     "@types/core-js": "^0.9.42",
+    "@types/handlebars": "^4.0.36",
+    "@types/node": "^8.0.24",
+    "command-line-args": "^4.0.7",
+    "handlebars": "^4.0.10",
+    "path": "^0.12.7",
     "typescript": "^2.4.2",
     "webpack": "^3.5.5",
     "webpack-livereload-plugin": "^0.11.0"

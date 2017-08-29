@@ -5,13 +5,18 @@
   "author": "Levente Löki <leventeloki@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf build compile dist dist.watch && mkdir build && ln -fs ../compile build/js",
-    "build-typescript": "tsc -p ./src --outDir compile",
+    "build-ci": "rm -rf ci/bin && tsc -p ./ci/src --outDir ./ci/bin",
+    "clean": "rm -rf build dist dist.watch",
+    "build-typescript": "tsc -p ./src --outDir ./build",
     "build-webpack": "webpack",
-    "build": "yarn run clean && yarn run build-typescript && node build/js/bin/compile-views.js && yarn run build-webpack",
-    "watch": "yarn run clean && yarn run build-typescript && (node build/js/bin/compile-views.js --watch & tsc -p ./src --outDir compile --watch & webpack --progress --colors --watch)",
-    "install-webpack-config": "ln -fs build/js/bin/webpack.config.js webpack.config.js",
-    "postinstall": "yarn run install-webpack-config"
+    "build-views": "node ci/bin/compile-views.js",
+    "build": "yarn run build-ci && yarn run clean && yarn run build-typescript && yarn run build-views && yarn run build-webpack",
+    "watch-typescript": "tsc -p ./src --outDir build --watch",
+    "watch-webpack": "webpack --progress --colors --watch",
+    "watch-views": "node ci/bin/compile-views.js --watch",
+    "watch": "yarn run clean && (yarn run watch-typescript & yarn run watch-views & yarn run watch-webpack)",
+    "install-webpack-config": "ln -fs ci/bin/webpack.config.js webpack.config.js",
+    "postinstall": "yarn run install-webpack-config && yarn run build-ci"
   },
   "devDependencies": {
     "@types/command-line-args": "^4.0.1",

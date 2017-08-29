@@ -1,7 +1,7 @@
 .DS_Store
 
 node_modules
-/compile
+/ci/bin
 /build
 /dist
 /dist.watch

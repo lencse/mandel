@@ -2,8 +2,7 @@
 
 node_modules
 /compile
-/build/*
-!/build/.gitkeep
+/build
 /dist
 /dist.watch
 /webpack.config.js

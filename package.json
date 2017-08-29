@@ -5,14 +5,13 @@
   "author": "Levente Löki <leventeloki@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf compile dist dist.watch",
+    "clean": "rm -rf build compile dist dist.watch && mkdir build && ln -fs ../compile build/js",
     "build-typescript": "tsc -p ./src --outDir compile",
     "build-webpack": "webpack",
-    "build": "yarn run clean && yarn run build-typescript && yarn run build-webpack",
+    "build": "yarn run clean && yarn run build-typescript && node build/js/bin/compile-views.js && yarn run build-webpack",
     "watch": "yarn run clean && yarn run build-typescript && (tsc -p ./src --outDir compile --watch & webpack --progress --colors --watch)",
     "install-webpack-config": "ln -fs build/js/bin/webpack.config.js webpack.config.js",
-    "install-build-dir": "ln -fs ../compile build/js",
-    "postinstall": "yarn run install-webpack-config && yarn run install-build-dir"
+    "postinstall": "yarn run install-webpack-config"
   },
   "devDependencies": {
     "@types/command-line-args": "^4.0.1",

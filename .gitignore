@@ -6,3 +6,4 @@ node_modules
 /dist
 /dist.watch
 /webpack.config.js
+/.sass-cache

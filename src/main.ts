@@ -1,5 +1,5 @@
-import Canvas from './Canvas'
-import App from './App'
+import Canvas from './App/Canvas'
+import App from './App/App'
 
 let app = new App(
     new Canvas(document.getElementById('main')),

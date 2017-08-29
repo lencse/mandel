@@ -15,8 +15,8 @@
     "watch-typescript": "tsc -p ./src --outDir build --watch",
     "watch-webpack": "webpack --progress --colors --watch",
     "watch-views": "node ci/bin/compile-views.js --watch",
-    "watch-scss": "mkdir dist.watch && mkdir dist.watch/css && scss --watch scss styles/main.scss:dist.watch/css/main.css",
-    "watch": "yarn run clean && (yarn run watch-typescript & yarn run watch-views & yarn run watch-webpack & yarn run watch-scss)",
+    "watch-scss": "scss --watch scss styles/main.scss:dist.watch/css/main.css",
+    "watch": "yarn run watch-typescript & yarn run watch-views & yarn run watch-webpack & yarn run watch-scss",
     "install-webpack-config": "ln -fs ci/bin/webpack.config.js webpack.config.js",
     "postinstall": "yarn run install-webpack-config && yarn run build-ci"
   },

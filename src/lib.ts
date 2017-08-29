@@ -1,4 +1,4 @@
-export const maxIterations = 1024;
+export const maxIterations = 1024
 
 export interface Complex {
     re: number,

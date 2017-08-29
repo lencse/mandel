@@ -20,12 +20,9 @@ const config = {
 
 module.exports =  {
     entry: [`./${dirs.build.js}/main.js`],
-
     output: {
         path: path.resolve(dirs.projectRoot, config.target, 'js'),
         filename: 'main.js'
     },
-
     plugins: config.plugins
-
 }

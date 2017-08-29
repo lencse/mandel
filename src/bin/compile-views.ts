@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { compile }  from 'handlebars'
+import { compile } from 'handlebars'
 import * as commandLineArgs from 'command-line-args'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -13,15 +13,37 @@ const options = commandLineArgs([{
     defaultValue: false
 }])
 
-const template = fs.readFileSync(path.resolve(dirs.projectRoot, dirs.views ,'index.hbs')).toString()
-const content = compile(template)({
-    watch: options.watch
-})
+class Compiler {
 
-const targetDir = path.resolve(dirs.projectRoot, 'build/html')
+    private sourceFile = path.resolve(dirs.projectRoot, dirs.views ,'index.hbs')
 
-if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir)
+    public compile() {
+        const template = fs.readFileSync(this.sourceFile).toString()
+        const content = compile(template)({
+            watch: options.watch
+        })
+        
+        const targetDir = path.resolve(dirs.projectRoot, options.watch ? dirs.dist.watch : dirs.dist.prod)
+        
+        if (!fs.existsSync(targetDir)) {
+            fs.mkdirSync(targetDir)
+        }
+        
+        fs.writeFileSync(path.resolve(targetDir, 'index.html'), content)
+    }
+
+    public watch() {
+        fs.watch(this.sourceFile, (eventType, filename) => {
+            this.compile()
+        })
+    }
+
 }
 
-fs.writeFileSync(path.resolve(targetDir, 'index.html'), content)
+let compiler = new Compiler()
+
+compiler.compile()
+
+if (options.watch) {
+    compiler.watch()
+}

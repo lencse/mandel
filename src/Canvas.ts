@@ -1,7 +1,7 @@
 export default class Canvas {
 
-    protected canvas: HTMLCanvasElement
-    protected context: CanvasRenderingContext2D
+    private canvas: HTMLCanvasElement
+    private context: CanvasRenderingContext2D
 
     constructor(container: HTMLElement) {
         this.canvas = document.createElement('canvas')

@@ -1,6 +1,5 @@
 import * as path from 'path'
 import * as LiveReloadPlugin from 'webpack-livereload-plugin'
-import * as CopyWebpackPlugin from 'copy-webpack-plugin'
 import * as commandLineArgs from 'command-line-args'
 import dirs from './dirs'
 
@@ -13,9 +12,7 @@ const options = commandLineArgs([{
 
 const config = {
     target: options.watch ? dirs.dist.watch : dirs.dist.prod,
-    plugins: options.watch ? [new LiveReloadPlugin()] : [new CopyWebpackPlugin([
-        {from: `${dirs.build.html}/index.html`, to: '../index.html'}
-    ])]
+    plugins: options.watch ? [new LiveReloadPlugin()] : []
 }
 
 module.exports =  {

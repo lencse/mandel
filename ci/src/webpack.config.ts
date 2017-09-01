@@ -3,6 +3,7 @@ import * as LiveReloadPlugin from 'webpack-livereload-plugin'
 import * as commandLineArgs from 'command-line-args'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
+import * as UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
 import dirs from './dirs'
 
 interface Config {
@@ -10,12 +11,14 @@ interface Config {
     fileNames: {
         js: string,
         css: string
-    }
+    },
+    loaders: Array<any>
 }
 
 interface Configs {
     dev: Config,
     watch: Config
+    prod: Config
 }
 
 const options = commandLineArgs([{
@@ -25,7 +28,11 @@ const options = commandLineArgs([{
     defaultValue: false
 }], {partial: true})
 
-const mode = options.watch ? 'watch' : 'dev'
+const mode = options.watch
+    ? 'watch'
+    : process.env.NODE_ENV === 'production'
+        ? 'prod'
+        : 'dev'
 
 const config: Configs = {
     dev: {
@@ -33,14 +40,32 @@ const config: Configs = {
         fileNames: {
             js: '[name].js',
             css: '[name].css'
-        }
+        },
+        loaders: []
+    },
+    prod: {
+        plugins: [
+            new UglifyjsWebpackPlugin()
+        ],
+        fileNames: {
+            js: '[name].[hash].js',
+            css: '[name].[contentHash].css'
+        },
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/, 
+                loader: 'babel-loader'
+            }
+        ]
     },
     watch: {
         plugins: [new LiveReloadPlugin()],
         fileNames: {
             js: '[name].js',
             css: '[name].css'            
-        }
+        },
+        loaders: []
     }
 }
 
@@ -53,7 +78,7 @@ module.exports =  {
         filename: `js/${effective.fileNames.js}`
     },
     module: {
-        loaders: [
+        loaders: effective.loaders.concat([
             {
                 test: /\.css$/,
                 loader: ExtractTextWebpackPlugin.extract({
@@ -61,7 +86,7 @@ module.exports =  {
                     use: 'css-loader'
                 })
             }
-        ]
+        ])
     },
     plugins: effective.plugins.concat([
         new HtmlWebpackPlugin({

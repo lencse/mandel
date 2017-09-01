@@ -2,7 +2,8 @@
 
 node_modules
 /ci/bin
-/build
+/build/*
+!/build/.gitkeep
 /dist
 /dist.watch
 /webpack.config.js

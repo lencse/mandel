@@ -23,13 +23,13 @@ class Compiler {
             watch: options.watch
         })
         
-        const targetDir = path.resolve(dirs.projectRoot, options.watch ? dirs.dist.watch : dirs.dist.prod)
+        const targetDir = path.resolve(dirs.projectRoot, dirs.build, 'html')
         
         if (!fs.existsSync(targetDir)) {
             fs.mkdirSync(targetDir)
         }
         
-        fs.writeFileSync(path.resolve(targetDir, 'index.html'), content)
+        fs.writeFileSync(path.resolve(targetDir, 'index.ejs'), content)
     }
 
     public watch() {

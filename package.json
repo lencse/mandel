@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build-ci": "rm -rf ci/bin && tsc -p ./ci/src --outDir ./ci/bin",
-    "clean": "rm -rf build/js build/html build/css dist dist.watch",
+    "clean": "rm -rf build/js build/html build/css dist",
     "build-typescript": "tsc -p ./src --outDir ./build/js",
     "build-webpack": "webpack",
     "build-views": "node ci/bin/compile-views.js",

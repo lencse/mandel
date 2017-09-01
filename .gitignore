@@ -5,7 +5,6 @@ node_modules
 /build/*
 !/build/.gitkeep
 /dist
-/dist.watch
 /webpack.config.js
 /.sass-cache
 /scss

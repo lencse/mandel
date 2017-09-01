@@ -23,7 +23,7 @@ class Compiler {
             watch: options.watch
         })
         
-        const targetDir = path.resolve(dirs.projectRoot, dirs.build, 'html')
+        const targetDir = path.resolve(dirs.projectRoot, dirs.build.html)
         
         if (!fs.existsSync(targetDir)) {
             fs.mkdirSync(targetDir)

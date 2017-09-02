@@ -16,7 +16,7 @@
     "watch-views": "node ci/bin/compile-views.js --watch",
     "watch": "yarn run clean && (yarn watch-typescript & yarn watch-views & yarn watch-webpack)",
     "postinstall": "yarn build-ci",
-    "test": "if [ ! -f ./dist/index.html ]; then echo \"index.html is missing\"; exit 1; fi; if [ ! -d ./dist/js ]; then echo \"dist/js is missing\"; exit 1; fi; if [ ! -d ./dist/css ]; then echo \"dist/css is missing\"; exit 1; fi;"
+    "test": "if [ ! -f ./dist/index.html ]; then echo \"index.html is missing\"; exit 1; fi; if [ ! -d ./dist/js ]; then echo \"dist/js is missing\"; exit 1; fi; if [ ! -d ./dist/css ]; then echo \"dist/css is missing\"; exit 1; fi; find -L dist"
   },
   "devDependencies": {
     "@types/colors": "^1.1.3",

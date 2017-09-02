@@ -12,7 +12,7 @@
     "build-views": "node ci/bin/compile-views.js",
     "build": "yarn run clean && yarn run build-typescript && yarn run build-views && yarn run build-webpack",
     "watch-typescript": "tsc -p ./src --outDir build/js --watch",
-    "watch-webpack": "webpack-dev-server --config ./ci/bin/webpack.config.js",
+    "watch-webpack": "webpack-dev-server --config ./ci/bin/webpack.config.js --port 8666",
     "watch-views": "node ci/bin/compile-views.js --watch",
     "watch": "yarn run clean && (yarn run watch-typescript & yarn run watch-views & yarn run watch-webpack)",
     "postinstall": "yarn run build-ci"

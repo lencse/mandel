@@ -20,9 +20,7 @@ class Compiler {
 
     public compile() {
         const template = fs.readFileSync(this.sourceFile).toString()
-        const content = compile(template)({
-            watch: options.watch
-        })
+        const content = compile(template)({})
         
         const targetDir = path.resolve(dirs.projectRoot, dirs.build.html)
         
@@ -55,3 +53,7 @@ compiler.compile()
 if (options.watch) {
     compiler.watch()
 }
+
+process.on('SIGINT', () => {
+    process.exit()
+})

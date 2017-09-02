@@ -1,6 +1,5 @@
 import * as path from 'path'
-import * as LiveReloadPlugin from 'webpack-livereload-plugin'
-import * as commandLineArgs from 'command-line-args'
+import * as commandLineArgs from 'command-line-args' 
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import * as UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
@@ -24,13 +23,13 @@ interface Configs {
 }
 
 const options = commandLineArgs([{
-    name: 'watch',
-    alias: 'w',
+    name: 'open',
+    alias: 'o',
     type: Boolean,
     defaultValue: false
 }], {partial: true})
 
-const mode = options.watch
+const mode = options.open
     ? 'watch'
     : process.env.NODE_ENV === 'production'
         ? 'prod'
@@ -56,7 +55,7 @@ const config: Configs = {
         loaders: []
     },
     watch: {
-        plugins: [new LiveReloadPlugin()],
+        plugins: [],
         fileNames: {
             js: '[name].js',
             css: '[name].css'            
@@ -67,7 +66,7 @@ const config: Configs = {
 
 const effective = config[mode]
 
-module.exports =  {
+let webpackConfig =  {
     entry: [`./${dirs.build.js}/main.js`,`./${dirs.styles}/main.scss` ],
     output: {
         path: path.resolve(dirs.projectRoot, dirs.dist),
@@ -105,3 +104,11 @@ module.exports =  {
         })
     ])
 }
+
+if (mode === 'watch') {
+    webpackConfig['devServer'] = {
+        contentBase: './dist'
+    }
+}
+
+module.exports = webpackConfig

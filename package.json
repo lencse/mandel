@@ -8,15 +8,14 @@
     "build-ci": "rm -rf ci/bin && tsc -p ./ci/src --outDir ./ci/bin",
     "clean": "rm -rf build/js build/html dist",
     "build-typescript": "tsc -p ./src --outDir ./build/js",
-    "build-webpack": "webpack --colors --progress",
+    "build-webpack": "webpack --colors --progress --config ./ci/bin/webpack.config.js",
     "build-views": "node ci/bin/compile-views.js",
     "build": "yarn run clean && yarn run build-typescript && yarn run build-views && yarn run build-webpack",
     "watch-typescript": "tsc -p ./src --outDir build/js --watch",
-    "watch-webpack": "webpack --progress --colors --watch",
+    "watch-webpack": "webpack-dev-server --config ./ci/bin/webpack.config.js",
     "watch-views": "node ci/bin/compile-views.js --watch",
     "watch": "yarn run clean && (yarn run watch-typescript & yarn run watch-views & yarn run watch-webpack)",
-    "install-webpack-config": "ln -fs ci/bin/webpack.config.js webpack.config.js",
-    "postinstall": "yarn run install-webpack-config && yarn run build-ci"
+    "postinstall": "yarn run build-ci"
   },
   "devDependencies": {
     "@types/colors": "^1.1.3",
@@ -42,6 +41,6 @@
     "typescript": "^2.4.2",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.5",
-    "webpack-livereload-plugin": "^0.11.0"
+    "webpack-dev-server": "^2.7.1"
   }
 }

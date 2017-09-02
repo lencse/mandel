@@ -9,4 +9,4 @@ script:
 before_deploy:
     - chmod +x ./deploy.sh
 deploy:
-    - ./deploy.sh
+    script: ./deploy.sh

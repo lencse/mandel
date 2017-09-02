@@ -18,7 +18,6 @@ export default class Fractal {
     }
 
     public resize(center: Point, width: number) {
-        console.log(center, width)
         const newCenter: Complex = {
             re: this.center.re + (center.x - this.canvas.width/2) * this.width / this.canvas.width,
             im: this.center.im + (center.y - this.canvas.height/2) * this.width /this.canvas.width

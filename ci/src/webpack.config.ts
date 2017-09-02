@@ -4,6 +4,8 @@ import * as commandLineArgs from 'command-line-args'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import * as UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
+import * as OptimizeCssAssetsWebpackPlugin from 'optimize-css-assets-webpack-plugin'
+import * as cssnano from 'cssnano'
 import dirs from './dirs'
 
 interface Config {
@@ -84,7 +86,6 @@ module.exports =  {
                 exclude: /node_modules/, 
                 loader: 'babel-loader'
             }
-
         ])
     },
     plugins: effective.plugins.concat([
@@ -93,6 +94,14 @@ module.exports =  {
             filename: 'index.html',
             inject: 'body'
         }),
-        new ExtractTextWebpackPlugin(`css/${effective.fileNames.css}`) 
+        new ExtractTextWebpackPlugin(`css/${effective.fileNames.css}`),
+        new OptimizeCssAssetsWebpackPlugin({
+            cssProcessor: cssnano,
+            cssProcessorOptions: {
+                discardComments: {
+                    removeAll: true
+                }
+            }
+        })
     ])
 }

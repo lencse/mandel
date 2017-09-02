@@ -6,3 +6,7 @@ before_script:
     - yarn build
 script:
     - yarn test
+before_deploy:
+    - chmod +x ./deploy.sh
+deploy:
+    - ./deploy.sh

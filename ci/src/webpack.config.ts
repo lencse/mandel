@@ -51,13 +51,7 @@ const config: Configs = {
             js: '[name].[hash].js',
             css: '[name].[contentHash].css'
         },
-        loaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/, 
-                loader: 'babel-loader'
-            }
-        ]
+        loaders: []
     },
     watch: {
         plugins: [new LiveReloadPlugin()],
@@ -72,7 +66,7 @@ const config: Configs = {
 const effective = config[mode]
 
 module.exports =  {
-    entry: [`./${dirs.build.js}/main.js`,`./${dirs.build.css}/main.css` ],
+    entry: [`./${dirs.build.js}/main.js`,`./${dirs.styles}/main.scss` ],
     output: {
         path: path.resolve(dirs.projectRoot, dirs.dist),
         filename: `js/${effective.fileNames.js}`
@@ -80,12 +74,17 @@ module.exports =  {
     module: {
         loaders: effective.loaders.concat([
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 loader: ExtractTextWebpackPlugin.extract({
                     fallback: 'style-loader',
-                    use: 'css-loader'
+                    use: 'css-loader!sass-loader'
                 })
+            }, {
+                test: /\.js$/,
+                exclude: /node_modules/, 
+                loader: 'babel-loader'
             }
+
         ])
     },
     plugins: effective.plugins.concat([

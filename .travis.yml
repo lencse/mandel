@@ -6,8 +6,6 @@ before_script:
     - yarn build
 script:
     - yarn test
-before_deploy:
-    - chmod +x ./deploy.sh
 deploy:
     provider: pages
     local_dir: dist

@@ -10,7 +10,7 @@
     "build-typescript": "tsc -p ./src --outDir ./build/js",
     "build-webpack": "webpack --colors --progress --config ./ci/bin/webpack.config.js",
     "build-views": "node ci/bin/compile-views.js",
-    "build": "echo \"NODE_ENV=$NODE_ENV\" && yarn run clean && yarn build-typescript && yarn build-views && yarn build-webpack",
+    "build": "yarn run clean && yarn build-typescript && yarn build-views && yarn build-webpack",
     "watch-typescript": "tsc -p ./src --outDir build/js --watch",
     "watch-webpack": "webpack-dev-server --config ./ci/bin/webpack.config.js --port 8666",
     "watch-views": "node ci/bin/compile-views.js --watch",

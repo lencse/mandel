@@ -1,12 +1,12 @@
 import { maxIterations } from './lib'
 
-let colors: Array<string> = []
+const colors: string[] = []
 
 const mainColors = [
     [47, 149, 153],
     [247, 219, 79],
     [242, 107, 56],
-    [236, 32, 73],            
+    [236, 32, 73],
     [167, 34, 110]
 ]
 
@@ -26,7 +26,7 @@ for (let i = 0; i < maxIterations; ++i) {
     const r = Math.round(c1[0] * (1-p) + c2[0] * p)
     const g = Math.round(c1[1] * (1-p) + c2[1] * p)
     const b = Math.round(c1[2] * (1-p) + c2[2] * p)
-    
+
     colors.push(`rgb(${r}, ${g}, ${b})`)
 }
 

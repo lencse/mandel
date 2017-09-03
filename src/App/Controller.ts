@@ -6,7 +6,7 @@ export default class Controller {
     private canvas: Canvas
     private from: Point = null
     private resizeHandler: (center: Point, width: number) => void
-    
+
     constructor(canvas: Canvas) {
         this.canvas = canvas
         this.canvas.onMouseDown((e: MouseEvent) => {
@@ -22,7 +22,11 @@ export default class Controller {
                 this.from.x,
                 this.from.y,
                 e.clientX - this.from.x,
-                Math.round((e.clientY > this.from.y ? 1 : -1) * this.canvas.height * Math.abs(e.clientX - this.from.x) / this.canvas.width)
+                Math.round(
+                    (e.clientY > this.from.y ? 1 : -1)
+                    * this.canvas.height * Math.abs(e.clientX - this.from.x)
+                    / this.canvas.width
+                )
             )
         })
         this.canvas.onMouseUp((e: MouseEvent) => {
@@ -41,5 +45,5 @@ export default class Controller {
     public onResize(handler: (center: Point, width: number) => void) {
         this.resizeHandler = handler
     }
-        
+
 }

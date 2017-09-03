@@ -53,7 +53,7 @@ export default class Fractal {
                 }
 
                 this.canvas.fillRect(iteration < maxIterations ? colors[iteration] : 'rgb(0, 0, 0)', col, row, 1, 1)
-            }            
+            }
         }
     }
 

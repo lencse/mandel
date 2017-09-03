@@ -3,6 +3,7 @@ node_js:
     - 8
 cache: yarn
 before_script:
+    - if [ $TRAVIS_BRANCH = "master" ]; then NODE_ENV=production; else NODE_ENV=development; fi;
     - yarn build
 script:
     - yarn test

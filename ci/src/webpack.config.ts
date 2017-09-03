@@ -1,5 +1,5 @@
 import * as path from 'path'
-import * as commandLineArgs from 'command-line-args' 
+import * as commandLineArgs from 'command-line-args'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import * as UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
@@ -8,12 +8,13 @@ import * as cssnano from 'cssnano'
 import dirs from './dirs'
 
 interface Config {
-    plugins: Array<any>
+    plugins: any[]
     fileNames: {
         js: string,
         css: string
     },
-    loaders: Array<any>
+    loaders: any[],
+    devServer: any
 }
 
 interface Configs {
@@ -42,7 +43,8 @@ const config: Configs = {
             js: '[name].js',
             css: '[name].css'
         },
-        loaders: []
+        loaders: [],
+        devServer: {}
     },
     prod: {
         plugins: [
@@ -52,22 +54,26 @@ const config: Configs = {
             js: '[name].[hash].js',
             css: '[name].[contentHash].css'
         },
-        loaders: []
+        loaders: [],
+        devServer: {}
     },
     watch: {
         plugins: [],
         fileNames: {
             js: '[name].js',
-            css: '[name].css'            
+            css: '[name].css'
         },
-        loaders: []
+        loaders: [],
+        devServer: {
+            contentBase: './dist'
+        }
     }
 }
 
 const effective = config[mode]
 
-let webpackConfig =  {
-    entry: [`./${dirs.build.js}/main.js`,`./${dirs.styles}/main.scss` ],
+module.exports =  {
+    entry: [`./${dirs.build.js}/main.js`, `./${dirs.styles}/main.scss` ],
     output: {
         path: path.resolve(dirs.projectRoot, dirs.dist),
         filename: `js/${effective.fileNames.js}`
@@ -82,7 +88,7 @@ let webpackConfig =  {
                 })
             }, {
                 test: /\.js$/,
-                exclude: /node_modules/, 
+                exclude: /node_modules/,
                 loader: 'babel-loader'
             }
         ])
@@ -102,13 +108,6 @@ let webpackConfig =  {
                 }
             }
         })
-    ])
+    ]),
+    devServer: effective.devServer
 }
-
-if (mode === 'watch') {
-    webpackConfig['devServer'] = {
-        contentBase: './dist'
-    }
-}
-
-module.exports = webpackConfig

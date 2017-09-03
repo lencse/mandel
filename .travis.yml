@@ -9,4 +9,9 @@ script:
 before_deploy:
     - chmod +x ./deploy.sh
 deploy:
-    script: ./deploy.sh
+    provider: pages
+    local_dir: dist
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    on:
+        branch: master

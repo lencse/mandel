@@ -13,7 +13,8 @@ interface Config {
         js: string,
         css: string
     },
-    loaders: any[]
+    loaders: any[],
+    devServer: any
 }
 
 interface Configs {
@@ -42,7 +43,8 @@ const config: Configs = {
             js: '[name].js',
             css: '[name].css'
         },
-        loaders: []
+        loaders: [],
+        devServer: {}
     },
     prod: {
         plugins: [
@@ -52,7 +54,8 @@ const config: Configs = {
             js: '[name].[hash].js',
             css: '[name].[contentHash].css'
         },
-        loaders: []
+        loaders: [],
+        devServer: {}
     },
     watch: {
         plugins: [],
@@ -60,13 +63,16 @@ const config: Configs = {
             js: '[name].js',
             css: '[name].css'
         },
-        loaders: []
+        loaders: [],
+        devServer: {
+            contentBase: './dist'
+        }
     }
 }
 
 const effective = config[mode]
 
-const webpackConfig =  {
+module.exports =  {
     entry: [`./${dirs.build.js}/main.js`, `./${dirs.styles}/main.scss` ],
     output: {
         path: path.resolve(dirs.projectRoot, dirs.dist),
@@ -103,13 +109,5 @@ const webpackConfig =  {
             }
         })
     ]),
-    devServer: null
+    devServer: effective.devServer
 }
-
-if (mode === 'watch') {
-    webpackConfig.devServer = {
-        contentBase: './dist'
-    }
-}
-
-module.exports = webpackConfig

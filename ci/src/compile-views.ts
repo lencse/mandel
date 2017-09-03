@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { compile } from 'handlebars'
 import * as commandLineArgs from 'command-line-args'
 import * as fs from 'fs'

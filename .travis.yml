@@ -4,6 +4,8 @@ node_js:
 cache: yarn
 before_script:
     - if [ $TRAVIS_BRANCH = "master" ]; then NODE_ENV=production; else NODE_ENV=development; fi;
+    - echo "On branch $TRAVIS_BRANCH"
+    - echo "NODE_ENV=$NODE_ENV"
     - yarn build
 script:
     - yarn test
